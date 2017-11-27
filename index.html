@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <style>
+            .box {
+                height: 100px;
+                width: 100px;
+                border: 1px solid black;
+                margin-bottom: 5px;
+                background-color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+
+        <script>
+            // should be customizable
+            var options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 1.0
+            };
+
+            // should be customizable
+            var callback = function(entries, observer) {
+                entries.forEach(function(entry) {
+                    console.log(entry.target)
+                    var visiblePct = (Math.floor(entry.intersectionRatio * 100)) + "%";
+                    console.log(visiblePct)
+                    entry.target.innerHTML = visiblePct;
+                    console.log(entry.intersectionRatio)
+                    if (entry.intersectionRatio === 1.0) {
+                        entry.target.style.backgroundColor = 'blue';
+                    } else {
+                        entry.target.style.backgroundColor = 'white';
+                    }
+                });
+            };
+            var observer = new IntersectionObserver(callback, options);
+            // should be customizable
+            // should be able to pass in query type, then I check if it's an array or an element
+            var target = document.querySelectorAll('.box');
+            target.forEach(function(element) {
+                observer.observe(element);
+            });
+        </script>
+    </body>
+</html>
